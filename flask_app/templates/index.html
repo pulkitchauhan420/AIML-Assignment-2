@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Happiness Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .prediction-output {
+            margin: 20px auto;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>World Happiness Prediction</h1>
+    <form action="/predict" method="post">
+        <label for="gdp_per_capita">GDP per Capita:</label>
+        <input type="text" name="gdp_per_capita" required>
+        
+        <label for="social_support">Social Support:</label>
+        <input type="text" name="social_support" required>
+        
+        <label for="healthy_life_expectancy">Healthy Life Expectancy:</label>
+        <input type="text" name="healthy_life_expectancy" required>
+        
+        <label for="freedom_to_make_life_choices">Freedom to Make Life Choices:</label>
+        <input type="text" name="freedom_to_make_life_choices" required>
+        
+        <label for="generosity">Generosity:</label>
+        <input type="text" name="generosity" required>
+        
+        <label for="perceptions_of_corruption">Perceptions of Corruption:</label>
+        <input type="text" name="perceptions_of_corruption" required>
+        
+        <label for="dystopia_residual">Dystopia + Residual:</label>
+        <input type="text" name="dystopia_residual" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div class="prediction-output">
+        {% if prediction is not none %}
+            <h2>Predicted Ladder Score: {{ prediction }}</h2>
+        {% endif %}
+
+        {% if shap_img %}
+            <h2>Feature Contribution to Prediction</h2>
+            <img src="data:image/png;base64,{{ shap_img }}" alt="SHAP explanation plot">
+        {% endif %}
+    </div>
+</body>
+</html>
